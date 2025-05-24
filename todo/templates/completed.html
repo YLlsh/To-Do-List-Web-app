@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f6f8;
+      color: #333;
+      padding: 20px;
+    }
+
+    .container {
+      position: relative;
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .task-summary {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .filters {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .filter {
+      flex: 1;
+      margin: 0 5px;
+    }
+
+    .filter a {
+      display: block;
+      text-align: center;
+      padding: 10px;
+      background-color: #eee;
+      color: #333;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background 0.2s ease;
+    }
+
+    .filter a:hover,
+    .filter a.active {
+      background-color: #ddd;
+    }
+
+    #add_task {
+      display: inline-block;
+      text-decoration: none;
+      padding: 10px 20px;
+      margin: 10px 0 20px;
+      background-color: #4caf50;
+      color: white;
+      border-radius: 6px;
+      transition: background 0.3s ease;
+    }
+
+    #add_task:hover {
+      background-color: #45a049;
+    }
+
+    .task-list {
+      list-style: none;
+    }
+
+    .task {
+      padding: 10px 15px;
+      margin-bottom: 15px;
+      background-color: #fafafa;
+      border-left: 6px solid #2196f3;
+      border-radius: 6px;
+    }
+
+    .task.completed {
+      text-decoration: line-through;
+      opacity: 0.6;
+      border-left-color: #4caf50;
+    }
+
+    .task-info {
+      font-size: 13px;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    .task_c {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .upper {
+      text-decoration: none;
+      color: rgb(30, 24, 24);
+      padding: 8px 40px;
+    }
+
+    .logout-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 8px 16px;
+      background-color: #f44336;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+      z-index: 10;
+    }
+
+    .logout-button:hover {
+      background-color: #d32f2f;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <a href="/log_out/" class="logout-button">Logout</a>
+
+    <h1>Task Dashboard</h1>
+
+    <!-- Task Summary -->
+    <div class="task-summary">
+      <span>Pending: <strong id="pending-count">{{padding}}</strong></span>
+      <span>Completed: <strong id="completed-count">{{complete}}</strong></span>
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="filters">
+      <div class="filter"><a href="/" class="upper">All</a></div>
+      <div class="filter"><a href="/padding/" class="upper">Pending</a></div>
+      <div class="filter"><a href="#" class="upper active">Completed</a></div>
+    </div>
+
+    <!-- Add Task Button -->
+    <a id="add_task" href="/add_task/">Add Task</a>
+
+    <!-- Task List (Only Completed Tasks) -->
+    <ul class="task-list">
+      {% for task in Tasks %}
+      {% if task.complete %}
+      <li class="task completed">
+        {{ task.task }}
+        <div class="task_c">
+          <div class="task-info">Due: {{ task.due }} | Priority: {{ task.priority }}</div>
+        </div>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</body>
+
+</html>

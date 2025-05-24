@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f6f8;
+      color: #333;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .task-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .task-form input,
+    .task-form select {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .task-form button {
+      padding: 10px 15px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .task-form button:hover {
+      background-color: #45a049;
+    }
+
+    .task-summary {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .back-arrow {
+      text-decoration: none;
+      padding: 10px;
+      border-radius: 6px;
+      background-color: #f0f0f0;
+      color: #333;
+      transition: background-color 0.2s ease;
+      display: inline-block;
+      margin-bottom: 15px;
+    }
+
+    .back-arrow:hover {
+      background-color: #dcdcdc;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <a href="/" class="back-arrow">← Back</a>
+    <h1>TO DO LIST</h1>
+
+    <!-- Task Summary -->
+    <div class="task-summary">
+      <span>Pending: <strong id="pending-count">{{padding}}</strong></span>
+      <span>Completed: <strong id="completed-count">{{complete}}</strong></span>
+    </div>
+
+    <!-- Add Task Form -->
+    <form class="task-form" method="post">
+      {% csrf_token %}
+      <h3>ADD TASK</h3>
+      <input type="text" placeholder="Task name" name="task" />
+      <input type="date" name="date" required />
+      <select name="priority" required>
+        <option value="" disabled selected>Select Priority</option>
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option>
+      </select>
+      <button type="submit">Add Task</button>
+    </form>
+  </div>
+</body>
+
+</html>

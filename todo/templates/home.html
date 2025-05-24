@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f6f8;
+      color: #333;
+      padding: 20px;
+    }
+
+    .container {
+      position: relative;
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .task-summary {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .filters {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .filter {
+      flex: 1;
+      margin: 0 5px;
+    }
+
+    .filter a {
+      display: block;
+      text-align: center;
+      padding: 10px;
+      background-color: #eee;
+      color: #333;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background 0.2s ease;
+    }
+
+    .filter a:hover,
+    .filter a.active {
+      background-color: #ddd;
+    }
+
+    .main-buttons {
+      display: flex;
+      justify-content: space-evenly;
+      margin-bottom: 20px;
+    }
+
+    .main-buttons a {
+      padding: 8px 16px;
+      background-color: #4caf50;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background 0.3s ease;
+    }
+
+    .main-buttons a:hover {
+      background-color: #45a049;
+    }
+
+    .task-list {
+      list-style: none;
+    }
+
+    .task {
+      padding: 10px 15px;
+      margin-bottom: 10px;
+      background-color: #fafafa;
+      border-left: 6px solid #2196f3;
+      border-radius: 6px;
+    }
+
+    .task.completed {
+      text-decoration: line-through;
+      opacity: 0.6;
+      border-left-color: #4caf50;
+    }
+
+    .task-info {
+      font-size: 13px;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    .task_c {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .complete-button {
+      padding: 5px 10px;
+      background-color: #2196f3;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background 0.3s ease;
+    }
+
+    .complete-button:hover {
+      background-color: #1976d2;
+    }
+
+    .logout-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 8px 16px;
+      background-color: #f44336;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+      z-index: 10;
+    }
+
+    .logout-button:hover {
+      background-color: #d32f2f;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <a href="/log_out/" class="logout-button">Logout</a>
+
+    <h1>Task Dashboard</h1>
+
+    <div class="task-summary">
+      <span>Pending: <strong id="pending-count">{{padding}}</strong></span>
+      <span>Completed: <strong id="completed-count">{{complete}}</strong></span>
+    </div>
+
+    <div class="filters">
+      <div class="filter"><a href="#" class="active">All</a></div>
+      <div class="filter"><a href="/padding/">Pending</a></div>
+      <div class="filter"><a href="/completed/">Completed</a></div>
+    </div>
+
+    <div class="main-buttons">
+      <a href="/add_task/">Add Task</a>
+      <a href="/clear_all/" onclick="return confirmDelete()">Clear All Tasks</a>
+    </div>
+
+    <ul class="task-list">
+      {% for task in Tasks %}
+      <li class="task {% if task.complete %}completed{% else %}pending{% endif %}">
+        {{ task.task }}
+        <div class="task_c">
+          <div class="task-info">Due: {{ task.due }} | Priority: {{ task.priority }}</div>
+          {% if not task.complete %}
+          <a class="complete-button" href="/complete/{{ task.id }}/">Complete</a>
+          {% endif %}
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <script>
+    function confirmDelete() {
+      return confirm("Are you sure you want to delete this?");
+    }
+  </script>
+</body>
+
+</html>
